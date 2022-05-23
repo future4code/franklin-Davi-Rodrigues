@@ -1,0 +1,3 @@
+# Aprendizados da semana
+
+Durante essa semana eu tive a oportunidade de aprender bastante. Logo na segunda, tivemos uma aula incrivel sobre o **terminal** e as suas funcionalidades. Colocamos esses novos conhecimetos em prática com o exercício muito divertido. Também tivemos um excelente aula de git, e mesmo eu já tendo conhecimento do assunto, sempre é da para aprender uma coisa nova, como a possibilidade de criar um **branch** e entrar nela ao mesmo tempo.
