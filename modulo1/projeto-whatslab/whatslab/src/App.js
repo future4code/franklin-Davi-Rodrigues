@@ -1,23 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
+import Form_User from './components/Form_User';
+import Mensagem from './components/Mensagem';
+import Tela from './components/Tela';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="mensagens">
+        <Form_User></Form_User>
+      </div>
     </div>
   );
 }
