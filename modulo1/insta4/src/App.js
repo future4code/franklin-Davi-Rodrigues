@@ -50,7 +50,7 @@ function App() {
     {
       usuario: "astor",
       fotoUsuario: "https://picsum.photos/50/50?random=5",
-      fotoPost: "https://picsum.photos/200/150?random=6",
+      fotoPost: "https://picsum.photos/200/150?random=6props-labedinprops-labedin",
     },
 
   ])
