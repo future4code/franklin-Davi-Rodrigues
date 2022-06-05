@@ -16,6 +16,7 @@ const MsgDiv = styled.div`
   margin-left: 10px;
   margin-bottom: 5px;
   background-color: white;
+  max-width: 70%;
   width: max-content;
   padding: 5px 15px;
   border-radius: 10px;

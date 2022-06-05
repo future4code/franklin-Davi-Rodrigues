@@ -2,7 +2,7 @@ import react from "react";
 import styled from "styled-components";
 
 const AreaMsg = styled.div`
-  width: 10%;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
 `
@@ -17,6 +17,7 @@ const MsgDiv = styled.div`
   width: max-content;
   padding: 10px 10px;
   border-radius: 10px;
+  max-width: 70%;
 `
 const Msg = styled.p`
   margin: 0 5px;
