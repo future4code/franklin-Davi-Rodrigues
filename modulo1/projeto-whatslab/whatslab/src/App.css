@@ -1,0 +1,14 @@
+.app {
+  display: flex;
+  justify-content: center;
+  background-color: #075e54;
+}
+
+.mensagens {
+  background-color: #ece5dd;
+  width: 700px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
