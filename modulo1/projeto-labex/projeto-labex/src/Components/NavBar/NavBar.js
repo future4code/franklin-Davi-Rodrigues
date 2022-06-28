@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import '../../App.css';
+import { goToHome, goToTrips, goToLogin } from "../../routes/coordinator";
 
 const Nav = styled.div`
     width: 100vw;
@@ -26,7 +28,7 @@ const Titulo = styled.h1`
 
 const Menu = styled.div`
     display: flex;
-    gap: 15px;
+    gap: 20px;
     margin-right: 30px;
 `
 
@@ -36,17 +38,20 @@ const ItemMenu = styled.p`
 
     &:hover {
         cursor: pointer;
+        color: #263238;
     }
 `
 
 function NavBar(){
+    const navigate = useNavigate()
+
     return(
         <Nav>
             <Titulo>LabeX</Titulo>
             <Menu>
-                <ItemMenu>Home</ItemMenu>
-                <ItemMenu>Quem Somos?</ItemMenu>
-                <ItemMenu>Contato</ItemMenu>
+                <ItemMenu onClick={() => goToHome(navigate)}>Home</ItemMenu>
+                <ItemMenu onClick={() => goToTrips(navigate)}>Ver viagens</ItemMenu>
+                <ItemMenu onClick={() => goToLogin(navigate)}>Área restrita</ItemMenu>
             </Menu>
         </Nav>
     )

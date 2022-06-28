@@ -42,9 +42,14 @@ table {
 	border-spacing: 0;
 }
 
+strong {
+	font-weight: 700;
+}
+
 .App {
 	background: linear-gradient(242.84deg, #73B386 41.35%, #92E3A9 100.5%);
-	height: 100vh;
+	height: 100%;
+	min-height: 100vh
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;700&display=swap');

@@ -42,6 +42,13 @@ const Button = styled.button`
     margin-top: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    &:hover {
+        cursor: pointer;
+        transition: all .5s;
+        background-color: #263238;
+        color: white;
+    }
 `
 
 function Home(){
