@@ -1,55 +1,102 @@
-import express from "express";
-import cors from "cors";
+import app from "./app";
+import connection from "./connection";
 import { users as usersList } from "./users";
 
-const app = express()
 
-app.use(express.json())
-app.use(cors())
 
 const users = usersList
 
-app.post('/user', (req, res) => {
+app.post('/user', async(req, res) => {
     const {name, nickname, email} = req.body
-    const id:number = users[users.length - 1].id
+    const id:string = Date.now().toString()
     const user = {
         id,
         name,
         nickname,
         email
     }
+    try {
 
-    users.push(user)
-    res.status(200).send('Usuário cadastrado')
+        await connection('Users')
+        .insert(user)
+        res.status(201).send('Usuário criado com sucesso')
+
+    } catch(erro){
+        console.log(erro);
+        res.status(500).send('Ocorreu um erro')
+        
+    }
+
+})
+
+app.get('/user/:id', async(req, res) => {
+    const id:string = req.params.id
+
+    try {
+        const user = await connection('Users')
+        .select('id', 'nickname')
+        .where({id: id})
+
+        res.send(user[0])
+        
+    }catch(erro) {
+        console.log(erro);
+        res.status(500).send('Ocorreu um erro')
+    }
+
+    // res.status(200).send({'id': id, 'nickname': nickname})
     
 })
 
-app.get('/user/:id', (req, res) => {
-    const param:number = Number(req.params.id)
-
-    const [{id, nickname}] = users.filter((user) => {
-        return user.id === param
-    })
-
-    res.status(200).send({'id': id, 'nickname': nickname})
-    
-})
-
-app.put('/user/edit/:id', (req, res) => {
-    const id:number = Number(req.params.id)
+app.put('/user/edit/:id', async(req, res) => {
+    const id:string = req.params.id
     const {name, nickname} = req.body
 
-    const index = users.findIndex((user) => {
-        return user.id === id
-    })
+    try {
+        await connection('Users')
+        .update({
+            name: name,
+            nickname: nickname
+        })
+        .where({id: id})
 
-    users[index].name = name
-    users[index].nickname = nickname
-
-    res.status(200).send(users[index])
+        res.send('Usuário atualizado')
+        
+    }catch(erro) {
+        console.log(erro);
+        res.status(500).send('Ocorreu um erro')
+    }
 })
 
-app.listen('3003', () => {
-    console.log('servidor rodando na porta 3000');
+app.post('/task', async (req, res) => {
+    const task = req.body
+    task.limitDate = task.limitDate.split('/').reverse().join('-');
+    try {
+        await connection('Tasks')
+            .insert(task)
+            res.status(201).send('Tarefa criada com sucesso')
+
+    } catch(erro){
+        console.log(erro);
+        res.status(500).send('Ocorreu um erro')
+        
+    }
+
 })
+
+app.get('/task/:id',async (req, res) => {
+    const id = req.params.id
+
+    try {
+        const task = await connection('Tasks').join('Users', 'Tasks.creatorUserId', '=', 'Users.id').select('Tasks.id', 'Tasks.title', 'Tasks.description', 'Tasks.limitDate', 'Tasks.creatorUserId', 'Users.nickname').where('Tasks.id', id)
+
+        res.status(200).send(task[0])
+        
+    } catch(erro){
+        console.log(erro);
+        res.status(500).send('Ocorreu um erro')
+        
+    }
+})
+
 
