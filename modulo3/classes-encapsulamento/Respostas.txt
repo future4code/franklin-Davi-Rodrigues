@@ -1,0 +1,16 @@
+================================
+========= Exercício 01 =========
+================================
+
+a) O construtor serve para criar uma nova instância da classe, para chamar o construtor devemos usar a palavra reservada 'new' antes do nome da classe.
+
+b) Apenas uma vez.
+
+c) Utilizando os métodos 'get' e 'set'.
+
+
+================================
+========= Exercício 02 =========
+================================
+
+a)
