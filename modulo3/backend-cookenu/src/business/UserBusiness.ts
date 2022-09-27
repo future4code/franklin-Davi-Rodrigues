@@ -1,5 +1,5 @@
 import { UserDatabase } from "../database/UserDatabase"
-import { User, USER_ROLES } from "../models/User"
+import { User } from "../models/User"
 import { Authenticator, ITokenPayload } from "../services/Authenticator"
 import { HashManager } from "../services/HashManager"
 import { IdGenerator } from "../services/IdGenerator"
@@ -48,14 +48,12 @@ export class UserBusiness {
             name,
             email,
             hashedPassword,
-            USER_ROLES.NORMAL
         )
 
         await userDatabase.createUser(user)
 
         const payload: ITokenPayload = {
             id: user.getId(),
-            role: user.getRole()
         }
 
         const authenticator = new Authenticator()
@@ -101,7 +99,6 @@ export class UserBusiness {
             userDB.name,
             userDB.email,
             userDB.password,
-            userDB.role
         )
 
         const hashManager = new HashManager()
@@ -113,7 +110,6 @@ export class UserBusiness {
 
         const payload: ITokenPayload = {
             id: user.getId(),
-            role: user.getRole()
         }
 
         const authenticator = new Authenticator()
@@ -125,6 +121,15 @@ export class UserBusiness {
         }
 
         return response
+    }
+
+    public getUser = async (input: any) => {
+        const token = input.token
+
+        const authenticator = new Authenticator()
+        const payload = authenticator.getTokenPayload(token)
+        console.log(payload);
+        
     }
 
     public getUsers = async (input: any) => {
@@ -161,7 +166,6 @@ export class UserBusiness {
                 userDB.name,
                 userDB.email,
                 userDB.password,
-                userDB.role
             )
 
             const userResponse: any = {
@@ -189,10 +193,6 @@ export class UserBusiness {
 
         if (!payload) {
             throw new Error("Token inválido ou faltando")
-        }
-
-        if (payload.role !== USER_ROLES.ADMIN) {
-            throw new Error("Apenas admins podem deletar usuários")
         }
 
         if (payload.id === idToDelete) {
@@ -263,12 +263,6 @@ export class UserBusiness {
             throw new Error("Parâmetro 'password' inválido")
         }
 
-        if (payload.role === USER_ROLES.NORMAL) {
-            if (payload.id !== idToEdit) {
-                throw new Error("Usuários normais só podem editar a própria conta")
-            }
-        }
-
         const userDatabase = new UserDatabase()
         const userDB = await userDatabase.findById(idToEdit)
 
@@ -281,7 +275,6 @@ export class UserBusiness {
             userDB.name,
             userDB.email,
             userDB.password,
-            userDB.role
         )
 
         name && user.setName(name)

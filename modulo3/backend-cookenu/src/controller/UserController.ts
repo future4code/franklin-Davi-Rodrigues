@@ -47,6 +47,20 @@ export class UserController {
         }
     }
 
+    public getUser = async (req: Request, res: Response) => {
+        try {
+            const input: any = {
+                token: req.headers.authorization,
+            }
+
+            const userBusiness = new UserBusiness()
+            const response = await userBusiness.getUsers(input)
+        } catch(error) {
+            console.log(error);
+            
+        }
+    }
+
     public getUsers = async (req: Request, res: Response) => {
         try {
             const input: any = {
