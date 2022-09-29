@@ -16,19 +16,38 @@ import { colors } from "../../constants/constants";
 export const Sidebar = () => {
   const [loteriaAtual, setLoteriaAtual] = useState(0);
   const loterias = useRequestData([], "loterias");
-  const [name, setName] = useState("");
+  const concursos = useRequestData([], "loterias-concursos");
+ 
+
 
   const onChangeLoteria = (event) => {
     setLoteriaAtual(event.target.value);
   };
+
+  const getConcursoId = () => {
+    const result = concursos.find((concurso) => concurso.loteriaId == loteriaAtual)
+    return result?.concursoId
+  }
 
   const showName = () => {
     const result = loterias.find((loteria) => Number(loteria?.id) === Number(loteriaAtual));
     return result?.nome;
   };
 
+  const showDate = (date) => {
+    if(date){
+        let result = date.split('T')
+        result = new Date(result[0])
+        result = new Intl.DateTimeFormat('pr-BR').format(result)
+        return result
+    } else {
+        return date
+    }
+  }
+
+  const detalheConcurso = useRequestData({}, `concursos/${getConcursoId()}`)
+
   
-  console.log(SidebarSvg);
   return (
     <Box
       sx={{
@@ -79,7 +98,10 @@ export const Sidebar = () => {
         }}
       >
         <ContestTitle>Concurso</ContestTitle>
-        <Contest>4531 – 07/04/2020</Contest>
+        {loterias && concursos[0]?.concursoId &&
+        <>
+        <Contest>{getConcursoId()} - {showDate(detalheConcurso.data)}</Contest>
+        </>}
       </Box>
     </Box>
   );
