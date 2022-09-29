@@ -12,6 +12,7 @@ import {
 import { useRequestData } from "../../hooks/useRequestData";
 import { useState } from "react";
 import { colors } from "../../constants/constants";
+import { Number } from "../Number/Number";
 
 export const Sidebar = () => {
   const [loteriaAtual, setLoteriaAtual] = useState(0);
@@ -30,7 +31,8 @@ export const Sidebar = () => {
   }
 
   const showName = () => {
-    const result = loterias.find((loteria) => Number(loteria?.id) === Number(loteriaAtual));
+    const result = loterias.find((loteria) => loteria?.id == loteriaAtual);
+    console.log(result?.nome);
     return result?.nome;
   };
 
@@ -49,13 +51,14 @@ export const Sidebar = () => {
 
   
   return (
+    <Box sx={{display: 'flex', alignItems: 'center', backgroundColor: '#EFEFEF'}}>
     <Box
       sx={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg width='613' height='1080' viewBox='0 0 613 1080' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M613 0C613 0 361.26 501.011 613 1080H0V0H613Z' fill='%23${colors[loteriaAtual].color}'/%3E%3C/svg%3E%0A")`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "contain",
         height: "100vh",
-        width: "50%",
+        minWidth: '500px',
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -103,6 +106,12 @@ export const Sidebar = () => {
         <Contest>{getConcursoId()} - {showDate(detalheConcurso.data)}</Contest>
         </>}
       </Box>
+    </Box>
+    <Box sx={{display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center'}}>
+        {detalheConcurso?.numeros && 
+            detalheConcurso.numeros.map((numero) => <Number key={numero} numero={numero} />)
+        }
+    </Box>
     </Box>
   );
 };
