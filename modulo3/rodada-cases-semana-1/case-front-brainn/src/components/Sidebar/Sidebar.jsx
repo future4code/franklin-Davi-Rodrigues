@@ -8,18 +8,24 @@ import {
   SelectDiv,
   Contest,
   ContestTitle,
+  SidebarContainer,
+  Container,
+  TitleContainer,
+  NumberContainer,
 } from "./styles";
 import { useRequestData } from "../../hooks/useRequestData";
 import { useState } from "react";
 import { colors } from "../../constants/constants";
 import { Number } from "../Number/Number";
+import { svgBackground } from "../../utils/svgBackground";
 
 export const Sidebar = () => {
   const [loteriaAtual, setLoteriaAtual] = useState(0);
   const loterias = useRequestData([], "loterias");
   const concursos = useRequestData([], "loterias-concursos");
- 
 
+  const isMobile = window.screen.width < 524
+ 
 
   const onChangeLoteria = (event) => {
     setLoteriaAtual(event.target.value);
@@ -51,20 +57,8 @@ export const Sidebar = () => {
 
   
   return (
-    <Box sx={{display: 'flex', alignItems: 'center', backgroundColor: '#EFEFEF'}}>
-    <Box
-      sx={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='613' height='1080' viewBox='0 0 613 1080' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M613 0C613 0 361.26 501.011 613 1080H0V0H613Z' fill='%23${colors[loteriaAtual].color}'/%3E%3C/svg%3E%0A")`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "contain",
-        height: "100vh",
-        minWidth: '500px',
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        paddingLeft: "60px",
-      }}
-    >
+    <Container>
+    <SidebarContainer bg={svgBackground(colors[loteriaAtual].color)} bgMobile={svgBackground(colors[loteriaAtual].color, true)} >
       <form action="">
         {loterias && (
           <SelectDiv>
@@ -79,19 +73,12 @@ export const Sidebar = () => {
         )}
       </form>
       {loterias &&
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          color: "#fff",
-          fontWeight: "bold",
-        }}
-      >
+      <TitleContainer>
         <Image src={Logo} />
         <Title>{showName()}</Title>
-      </Box>}
-
+      </TitleContainer>}
+      
+      {!isMobile ?
       <Box
         sx={{
           display: "flex",
@@ -106,12 +93,15 @@ export const Sidebar = () => {
         <Contest>{getConcursoId()} - {showDate(detalheConcurso.data)}</Contest>
         </>}
       </Box>
-    </Box>
-    <Box sx={{display: 'flex', gap: '20px', flexWrap: 'wrap', justifyContent: 'center'}}>
+      :
+      <ContestTitle>Concurso Nº {getConcursoId()}</ContestTitle>
+    }
+      </SidebarContainer>
+    <NumberContainer>
         {detalheConcurso?.numeros && 
             detalheConcurso.numeros.map((numero) => <Number key={numero} numero={numero} />)
         }
-    </Box>
-    </Box>
+    </NumberContainer>
+    </Container>
   );
 };
