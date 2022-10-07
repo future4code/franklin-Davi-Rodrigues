@@ -14,10 +14,11 @@ import {
   NumberContainer,
 } from "./styles";
 import { useRequestData } from "../../hooks/useRequestData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { colors } from "../../constants/constants";
 import { Number } from "../Number/Number";
 import { svgBackground } from "../../utils/svgBackground";
+import { Load } from "../Load/Load";
 
 export const Sidebar = () => {
   const [loteriaAtual, setLoteriaAtual] = useState(0);
@@ -37,9 +38,12 @@ export const Sidebar = () => {
   }
 
   const showName = () => {
-    const result = loterias.find((loteria) => loteria?.id == loteriaAtual);
-    console.log(result?.nome);
-    return result?.nome;
+    if(loterias.length > 2){
+      const result = loterias.find((loteria) => (loteria?.id == loteriaAtual) || (0 == loteriaAtual));
+      return result?.nome
+    }else {
+      return 'mega-sena';
+    }
   };
 
   const showDate = (date) => {
@@ -53,10 +57,14 @@ export const Sidebar = () => {
     }
   }
 
+  
+
   const detalheConcurso = useRequestData({}, `concursos/${getConcursoId()}`)
 
   
   return (
+    <>
+    {!(loterias.length > 2) || !concursos || !detalheConcurso ? <Load /> : 
     <Container>
     <SidebarContainer bg={svgBackground(colors[loteriaAtual].color)} bgMobile={svgBackground(colors[loteriaAtual].color, true)} >
       <form action="">
@@ -102,6 +110,7 @@ export const Sidebar = () => {
             detalheConcurso.numeros.map((numero) => <Number key={numero} numero={numero} />)
         }
     </NumberContainer>
-    </Container>
+    </Container>}
+    </>
   );
 };

@@ -84,10 +84,11 @@ export const SidebarContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding-left: 60px;
-
+  
   @media (max-width: 524px) {
     background-image: url("${(props) => props.bgMobile}");
     background-position: center;
+    background-size: auto;
     height: 50vh;
     min-width: 100vw;
     align-items: center;
@@ -102,6 +103,7 @@ export const NumberContainer = styled.div`
   gap: 35px;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 15px;
 
   @media (max-width: 524px) {
     gap: 25px;
