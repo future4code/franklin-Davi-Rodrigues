@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Top = styled.div`
     background-color: #5C16C5;
-    width: 100vw;
+    max-width: 100vw;
     height: 56px;
     display: flex;
     align-items: center;
@@ -27,12 +27,12 @@ export const Firulinha = styled.div`
 
 export const Bottom = styled.div`
     background-color: #2D0C5E;
-    width: 100vw;
+    max-width: 100vw;
     height: 449px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
 `
 
 export const Call = styled.h2`
@@ -58,7 +58,7 @@ export const TextFilterBy = styled.p`
 `
 
 export const FiltersContainer = styled.div`
-    max-width: 800px;
+    max-width: 1080px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
