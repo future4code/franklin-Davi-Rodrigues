@@ -66,7 +66,8 @@ export const FiltersContainer = styled.div`
 `
 
 export const Filter = styled.div`
-    background-color: white;
+    background-color: ${props => !props.active ? 'white' : '#D18000'} ;
+    color: ${props => !props.active ? 'black' : 'white'} ;;
     height: 40px;
     padding: 8px 16px;
     font-weight: 700;
@@ -75,6 +76,7 @@ export const Filter = styled.div`
 
     &:hover {
         color: white;
-        background-color: #5C16C5;
+        background-color: ${props => !props.active ? '#5C16C5' : '#D18000'};
+        cursor: pointer;
     }
 `
