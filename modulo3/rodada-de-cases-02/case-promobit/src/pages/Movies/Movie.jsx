@@ -25,6 +25,7 @@ const Movie = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [credits, setCredit] = useState(null);
+  const [video, setVideo] = useState('')
 
   const getMovie = async (url) => {
     const res = await fetch(url);
@@ -40,6 +41,13 @@ const Movie = () => {
     setCredit(data);
   };
 
+  const getVideo = async (url) => {
+    const res = await fetch(url)
+    const data = await res.json()
+
+    setVideo(data.results[0].key)
+  }
+
   useEffect(() => {
     const url = `${moviesUrl}${id}?${apiKey}&${language}`;
     getMovie(url);
@@ -50,15 +58,18 @@ const Movie = () => {
     getCredit(url);
   }, [movie]);
 
+  useEffect(() => {
+    const url = `${moviesUrl}${id}/videos?${apiKey}&${language}`;
+    getVideo(url);
+  }, [movie]);
+
   const formatGenres = (genres) => {
     let result = "";
-    (genres);
     genres.forEach((genre) => {
       result += ` ${genre.name},`;
     });
     return result.substring(0, result.length - 1);
   };
-  (movie);
   return (
     <>
       {movie && credits && (
@@ -108,6 +119,9 @@ const Movie = () => {
                 <ActorCard key={character.id} actor={character} />
               ))}
             </Cast>
+            
+            <CastTitle style={{marginTop: '39px', marginBottom: '24px'}}>Trailer</CastTitle>
+            <iframe width="907" height="510" src={`https://www.youtube.com/embed/${video}`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </Container>
         </>
       )}
